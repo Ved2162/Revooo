@@ -1,0 +1,21 @@
+import { createAuthClient } from "better-auth/react";
+import { adminClient, emailOTPClient } from "better-auth/client/plugins";
+import { ac, admin as adminRole, user, facilityOwner } from "./permissions";
+import { stripeClient } from "@better-auth/stripe/client";
+
+export const authClient = createAuthClient({
+  plugins: [
+    adminClient({
+      ac,
+      roles: {
+        admin: adminRole,
+        user,
+        facilityOwner,
+      },
+    }),
+    emailOTPClient(),
+    stripeClient({
+      subscription: false,
+    }),
+  ],
+});
